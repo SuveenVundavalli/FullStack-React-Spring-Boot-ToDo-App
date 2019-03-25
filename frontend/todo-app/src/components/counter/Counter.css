@@ -6,6 +6,11 @@ button {
   width: 100px;
 }
 
+button.reset {
+  background-color: red;
+  width: 200px;
+}
+
 .count {
   font-size: 50px;
   padding: 15px 30px;
