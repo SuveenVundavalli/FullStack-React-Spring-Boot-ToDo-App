@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import CounterButton from "./CounterButton";
 import "./Counter.css";
 
 class Counter extends Component {
@@ -57,39 +57,5 @@ class Counter extends Component {
     this.setState({ counter: 0 });
   }
 }
-
-class CounterButton extends Component {
-  // Define the initial state in a constructor
-  constructor() {
-    super();
-    this.increment = this.increment.bind(this);
-    this.decrement = this.decrement.bind(this);
-  }
-  render() {
-    return (
-      <div className="counterButton">
-        <button onClick={this.increment}>+{this.props.by}</button>
-        <button onClick={this.decrement}>-{this.props.by}</button>
-      </div>
-    );
-  }
-
-  increment() {
-    this.props.incrementMethod(this.props.by);
-  }
-  decrement() {
-    this.props.decrementMethod(this.props.by);
-  }
-}
-
-// default values
-CounterButton.defaultProps = {
-  by: 1
-};
-
-// validations
-CounterButton.propTypes = {
-  by: PropTypes.number
-};
 
 export default Counter;
