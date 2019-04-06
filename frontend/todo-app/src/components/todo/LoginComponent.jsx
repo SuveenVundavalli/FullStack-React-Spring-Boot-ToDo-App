@@ -20,7 +20,7 @@ class LoginComponent extends Component {
   }
   loginClicked() {
     // admin, password
-    if (this.state.username === "admin" && this.state.password === "password") {
+    /* if (this.state.username === "admin" && this.state.password === "password") {
       AuthenticationService.registerSuccessfulLogin(
         this.state.username,
         this.state.password
@@ -31,7 +31,43 @@ class LoginComponent extends Component {
     } else {
       this.setState({ showSuccessMessage: false });
       this.setState({ hasLoginFailed: true });
-    }
+    } */
+
+    AuthenticationService.executeJwtAuthenticationService(
+      this.state.username,
+      this.state.password
+    )
+      .then((response) => {
+        debugger
+        AuthenticationService.registerSuccessfulLoginWithJwt(
+          this.state.username,
+          response.data.token
+        );
+        this.props.history.push(`/welcome/${this.state.username}`);
+      })
+      .catch(() => {
+        debugger
+        this.setState({
+          showSuccessMessage: false
+        });
+        this.setState({ hasLoginFailed: true });
+      });
+    // AuthenticationService.executeBasicAuthenticationService(
+    //   this.state.username,
+    //   this.state.password
+    // )
+    //   .then(() => {
+    //     AuthenticationService.registerSuccessfulLogin(
+    //       this.state.username,
+    //       this.state.password
+    //     );
+    //     this.props.history.push(`/welcome/${this.state.username}`);
+    //   })
+    //   .catch(() => {
+    //     this.setState({ showSuccessMessage: false });
+    //     this.setState({ hasLoginFailed: true });
+    //   });
+
     console.log(this.state);
   }
 
