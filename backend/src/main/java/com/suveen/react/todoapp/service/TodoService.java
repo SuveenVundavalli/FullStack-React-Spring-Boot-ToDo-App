@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface TodoService {
 
-  List<Todo> findAll();
+  List<Todo> findAll(String username);
 
   Todo deleteById(Long id);
 

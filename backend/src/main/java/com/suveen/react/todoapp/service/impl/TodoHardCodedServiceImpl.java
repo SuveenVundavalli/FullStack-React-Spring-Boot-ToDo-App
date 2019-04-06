@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("todoHardCodedService")
 public class TodoHardCodedServiceImpl implements TodoService {
 
   private static List<Todo> todos = new ArrayList<>();
@@ -20,7 +20,7 @@ public class TodoHardCodedServiceImpl implements TodoService {
   }
 
   @Override
-  public List<Todo> findAll() {
+  public List<Todo> findAll(String username) {
     return todos;
   }
 

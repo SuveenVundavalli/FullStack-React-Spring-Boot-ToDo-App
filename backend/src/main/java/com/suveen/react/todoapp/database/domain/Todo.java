@@ -2,11 +2,17 @@ package com.suveen.react.todoapp.database.domain;
 
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
+@Entity
 public class Todo {
 
-  private Long id;
+  @Id @GeneratedValue private Long id;
 
+  @NotNull
   private String username;
 
   private String description;
@@ -84,12 +90,19 @@ public class Todo {
 
   @Override
   public String toString() {
-    return "Todo{" +
-        "id=" + id +
-        ", username='" + username + '\'' +
-        ", description='" + description + '\'' +
-        ", targetDate=" + targetDate +
-        ", isDone=" + isDone +
-        '}';
+    return "Todo{"
+        + "id="
+        + id
+        + ", username='"
+        + username
+        + '\''
+        + ", description='"
+        + description
+        + '\''
+        + ", targetDate="
+        + targetDate
+        + ", isDone="
+        + isDone
+        + '}';
   }
 }

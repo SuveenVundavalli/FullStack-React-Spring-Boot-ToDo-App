@@ -17,8 +17,14 @@ public class JwtInMemoryUserDetailsService implements UserDetailsService {
     inMemoryUserList.add(
         new JwtUserDetails(
             1L,
-            "in28minutes",
-            "$2a$10$3zHzb.Npv1hfZbLEU5qsdOju/tk2je6W6PnNnY.c1ujWPcZh4PL6e",
+            "admin",
+            "$2a$10$8.C9Xg03wqV0tNfo0pUaDeBb78L/bGRuXQ4EyH1WasER3FwNlB06S",
+            "ROLE_USER_2"));
+    inMemoryUserList.add(
+        new JwtUserDetails(
+            2L,
+            "user",
+            "$2a$10$LCp6mwLUaUDKf2.B8EchFu8SbaKzquQfAucDRpMaPUFEu1shokxk2",
             "ROLE_USER_2"));
   }
 

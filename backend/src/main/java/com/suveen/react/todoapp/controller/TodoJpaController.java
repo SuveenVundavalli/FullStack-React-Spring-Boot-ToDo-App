@@ -5,6 +5,7 @@ import com.suveen.react.todoapp.service.TodoService;
 import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,29 +22,32 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @CrossOrigin(origins = "http://localhost:4200")
 public class TodoJpaController {
 
-  @Autowired private TodoService todoHardCodedService;
+  @Qualifier("todoService")
+  @Autowired private TodoService todoService;
 
-  @GetMapping("/users/{username}/todos")
+  @GetMapping("/api/users/{username}/todos")
   public List<Todo> getAllTodos(@PathVariable String username) {
 
-    return todoHardCodedService.findAll();
+    return todoService.findAll(username);
   }
 
-  @GetMapping("/users/{username}/todos/{id}")
+  @GetMapping("/api/users/{username}/todos/{id}")
   public Todo getTodo(@PathVariable String username, @PathVariable Long id) {
 
-    return todoHardCodedService.findById(id);
+    return todoService.findById(id);
   }
 
-  @PutMapping("/users/{username}/todos/{todoId}")
+  @PutMapping("/api/users/{username}/todos/{todoId}")
   public ResponseEntity<Todo> updateTodo(
       @PathVariable String username, @PathVariable Long todoId, @RequestBody Todo todo) {
-    return new ResponseEntity<>(todoHardCodedService.save(todo), HttpStatus.OK);
+    todo.setUsername(username);
+    return new ResponseEntity<>(todoService.save(todo), HttpStatus.OK);
   }
 
-  @PostMapping("/users/{username}/todos")
+  @PostMapping("/api/users/{username}/todos")
   public ResponseEntity<Void> addTodo(@PathVariable String username, @RequestBody Todo todo) {
-    Todo createdTodo = todoHardCodedService.save(todo);
+    todo.setUsername(username);
+    Todo createdTodo = todoService.save(todo);
     URI uri =
         ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
@@ -52,9 +56,9 @@ public class TodoJpaController {
     return ResponseEntity.created(uri).build();
   }
 
-  @DeleteMapping("/users/{username}/todos/{id}")
+  @DeleteMapping("/api/users/{username}/todos/{id}")
   public ResponseEntity<Void> deleteTodo(@PathVariable String username, @PathVariable Long id) {
-    if (todoHardCodedService.deleteById(id) != null) {
+    if (todoService.deleteById(id) != null) {
       return ResponseEntity.noContent().build();
     }
     return ResponseEntity.notFound().build();
